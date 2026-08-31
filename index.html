@@ -834,6 +834,90 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
   filter:brightness(1.07);
   box-shadow:0 12px 28px rgba(108,40,217,.20);
 }
+  /* ===== ÇALIŞMA SÜRECİ ===== */
+
+.process-section{
+  padding:64px 0 38px;
+}
+
+.process-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+}
+
+.process-card{
+  position:relative;
+  min-height:175px;
+  padding:23px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  background:rgba(11,7,20,.45);
+  backdrop-filter:blur(13px);
+  -webkit-backdrop-filter:blur(13px);
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+.process-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(166,108,255,.34);
+  box-shadow:0 18px 45px rgba(0,0,0,.18);
+}
+
+.process-number{
+  color:#a866ff;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.process-card h3{
+  margin:12px 0 7px;
+  font-size:16px;
+}
+
+.process-card p{
+  margin:0;
+  color:#999eac;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.process-line{
+  position:absolute;
+  top:31px;
+  right:-22px;
+  width:42px;
+  height:1px;
+  background:linear-gradient(
+    90deg,
+    rgba(166,108,255,.45),
+    transparent
+  );
+}
+
+@media(max-width:900px){
+
+  .process-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .process-line{
+    display:none;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .process-grid{
+    grid-template-columns:1fr;
+  }
+
+}
 </style>
 </head>
 <body class="vx-loading">
@@ -971,7 +1055,68 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
       Onaylı yorumlar
     </div>
   </div>
+<!-- ===== ÇALIŞMA SÜRECİ ===== -->
+<section class="process-section">
+  <div class="container">
 
+    <div class="section-title">
+      <div class="eyebrow" style="font-size:12px;letter-spacing:2px;">
+        NASIL ÇALIŞIYORUZ?
+      </div>
+
+      <h2>Fikirden teslimata, net bir süreç.</h2>
+
+      <p>
+        Projenin her adımında ne olduğunu bilmen için
+        sade ve şeffaf ilerliyoruz.
+      </p>
+    </div>
+
+    <div class="process-grid">
+
+      <article class="process-card">
+        <div class="process-number">01 / KEŞİF</div>
+        <h3>İhtiyacı Anlıyoruz</h3>
+        <p>
+          Hedefini, beklentini ve projenin ihtiyaçlarını
+          netleştiriyoruz.
+        </p>
+        <span class="process-line"></span>
+      </article>
+
+      <article class="process-card">
+        <div class="process-number">02 / TASARIM</div>
+        <h3>Fikri Şekillendiriyoruz</h3>
+        <p>
+          Modern, sade ve markana uygun görsel dili
+          oluşturuyoruz.
+        </p>
+        <span class="process-line"></span>
+      </article>
+
+      <article class="process-card">
+        <div class="process-number">03 / UYGULAMA</div>
+        <h3>Detayları İşliyoruz</h3>
+        <p>
+          Seçilen yönü geliştiriyor, düzenlemeleri yapıyor
+          ve son kontrolleri tamamlıyoruz.
+        </p>
+        <span class="process-line"></span>
+      </article>
+
+      <article class="process-card">
+        <div class="process-number">04 / TESLİM</div>
+        <h3>Hazır Hale Getiriyoruz</h3>
+        <p>
+          Son çıktıyı teslim ediyor ve gerektiğinde
+          sonraki adımlarda destek oluyoruz.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+</section>
   <div id="commentsContainer" class="comments-grid">
     <div class="comment-empty">
       <div class="comment-empty-icon">💬</div>
