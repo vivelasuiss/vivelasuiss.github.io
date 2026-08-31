@@ -485,13 +485,20 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
 @keyframes homeLightSweep{0%{transform:translateX(-12%) rotate(-4deg)}100%{transform:translateX(12%) rotate(4deg)}}
 
 
-.review-form{max-width:720px;margin:30px auto 0;padding:28px!important}
-.review-form h3{font-size:20px;margin:0 0 8px}.review-form>p{color:#9da1ae;font-size:13px;margin:0 0 20px}
-.review-form form{display:grid;gap:12px}.review-form input,.review-form select,.review-form textarea{width:100%;border:1px solid #292c38;border-radius:10px;background:rgba(4,2,10,.65);color:#f8f8fb;padding:13px;outline:none}
-.review-form input:focus,.review-form select:focus,.review-form textarea:focus{border-color:#8b3ff0;box-shadow:0 0 0 3px rgba(139,63,240,.12)}
-.review-form textarea{min-height:120px;resize:vertical}.review-form button{border:0;cursor:pointer;width:max-content}.review-form small{font-size:11px}
-#commentStatus{font-size:12px;color:#caa8ff;min-height:18px}
-@media(max-width:700px){.review-form{padding:22px!important}.review-form button{width:100%;text-align:center}}
+/* ===== SUPABASE CUSTOMER COMMENTS ===== */
+.comments-grid{grid-template-columns:repeat(3,1fr);align-items:stretch}
+.comment-loading{grid-column:1/-1;text-align:center;color:var(--muted);min-height:120px;display:grid;place-items:center}
+.comment-form-wrap{max-width:760px;margin:28px auto 0;padding:28px;border:1px solid rgba(197,140,255,.16);border-radius:18px;background:rgba(10,5,20,.38);backdrop-filter:blur(15px) saturate(145%);-webkit-backdrop-filter:blur(15px) saturate(145%)}
+.comment-form-wrap .section-title{margin-bottom:20px}
+.comment-form{display:grid;gap:12px}
+.comment-form input,.comment-form select,.comment-form textarea{width:100%;border:1px solid #292c38;border-radius:11px;background:rgba(4,2,10,.72);color:var(--white);padding:14px;font:inherit;outline:none}
+.comment-form input:focus,.comment-form select:focus,.comment-form textarea:focus{border-color:#8b3ff0;box-shadow:0 0 0 3px rgba(139,63,240,.12)}
+.comment-form textarea{min-height:130px;resize:vertical}
+.comment-submit{border:0;border-radius:11px;padding:14px 18px;color:white;background:linear-gradient(135deg,#903ff4,#6c28d9);font-weight:800;cursor:pointer}
+.comment-status{min-height:20px;color:#a4a8b5;font-size:13px}
+.review{display:flex;flex-direction:column;gap:5px}.review p{margin:8px 0 0}
+@media(max-width:850px){.comments-grid{grid-template-columns:1fr}.comment-form-wrap{padding:22px}}
+
 </style>
 </head>
 <body class="vx-loading">
@@ -561,30 +568,37 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
 </section>
 
 <section id="yorumlar" class="reviews">
- <div class="section-title"><h2>Müşteri Yorumları</h2><p>Hizmet deneyimleri</p></div>
- <div id="commentsContainer" class="grid">
-  <div class="card review"><p style="color:#9da1ae;margin:0">Yorumlar yükleniyor...</p></div>
- </div>
- <div class="review-form card">
-  <h3>Sen de yorumunu bırak</h3>
-  <p>Deneyimini paylaş. Yorumun admin onayından sonra yayınlanır.</p>
-  <form id="commentForm">
-   <input id="commentName" type="text" placeholder="Adınız" maxlength="80" required>
-   <input id="commentEmail" type="email" placeholder="E-posta adresiniz" maxlength="120" required>
-   <select id="commentRating" required>
-    <option value="">Puan seçin</option>
-    <option value="5">★★★★★ 5</option>
-    <option value="4">★★★★☆ 4</option>
-    <option value="3">★★★☆☆ 3</option>
-    <option value="2">★★☆☆☆ 2</option>
-    <option value="1">★☆☆☆☆ 1</option>
-   </select>
-   <textarea id="commentText" placeholder="Deneyiminizi yazın..." maxlength="1000" required></textarea>
-   <button class="btn primary" type="submit">Yorum Gönder</button>
-   <small style="color:#777c89">Yorumunuz admin onayından sonra yayınlanacaktır.</small>
-   <div id="commentStatus" aria-live="polite"></div>
-  </form>
- </div>
+  <div class="section-title">
+    <h2>Müşteri Yorumları</h2>
+    <p>Onaylanan müşteri deneyimleri</p>
+  </div>
+
+  <div id="commentsContainer" class="grid comments-grid">
+    <div class="card review comment-loading">Yorumlar yükleniyor...</div>
+  </div>
+
+  <div class="comment-form-wrap">
+    <div class="section-title">
+      <h2>Sen de yorumunu bırak</h2>
+      <p>Yorumun admin onayından sonra yayınlanacaktır.</p>
+    </div>
+
+    <form id="commentForm" class="comment-form">
+      <input id="commentName" type="text" placeholder="Adınız" maxlength="80" required>
+      <input id="commentEmail" type="email" placeholder="E-posta adresiniz" maxlength="120" required>
+      <select id="commentRating" required>
+        <option value="">Puan seçin</option>
+        <option value="5">★★★★★ 5</option>
+        <option value="4">★★★★☆ 4</option>
+        <option value="3">★★★☆☆ 3</option>
+        <option value="2">★★☆☆☆ 2</option>
+        <option value="1">★☆☆☆☆ 1</option>
+      </select>
+      <textarea id="commentText" placeholder="Deneyiminizi yazın..." maxlength="1000" required></textarea>
+      <button type="submit" class="comment-submit">Yorum Gönder</button>
+      <div id="commentStatus" class="comment-status" aria-live="polite"></div>
+    </form>
+  </div>
 </section>
 
 <section id="ornekler" class="portfolio">
@@ -721,5 +735,6 @@ size();addEventListener('resize',size,{passive:true});raf=requestAnimationFrame(
   window.SUPABASE_KEY = "sb_publishable_Qc5mc1Bmt9Zyyh1KWX75EQ_DGpr7Tso";
 </script>
 <script src="comments.js"></script>
+
 </body>
 </html>
