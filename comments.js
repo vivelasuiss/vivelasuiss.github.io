@@ -283,6 +283,13 @@
             ?.value
             .trim();
 
+        
+        const email =
+          document
+            .getElementById("commentEmail")
+            ?.value
+            .trim();
+
 
         /* E-posta inputu index'te olabilir,
            fakat Supabase tablosunda email kolonu
@@ -291,6 +298,7 @@
 
         if (
           !name ||
+          !email ||
           !rating ||
           !comment
         ) {
@@ -356,12 +364,7 @@
         }
 
 
-        /*
-          ÖNEMLİ:
-          email göndermiyoruz.
-          approved da göndermiyoruz.
-          Supabase default olarak approved=false yapıyor.
-        */
+       
 
         const {
           error
@@ -370,6 +373,8 @@
           .insert({
 
             name: name,
+
+            email: email,
 
             rating: rating,
 
