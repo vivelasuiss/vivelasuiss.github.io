@@ -1082,6 +1082,90 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
   }
 
 }
+  /* ===== PREMIUM SCROLL REVEAL ===== */
+
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition:
+    opacity .7s ease,
+    transform .7s cubic-bezier(.16,1,.3,1);
+}
+
+.reveal.is-visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.reveal-delay-1{transition-delay:.08s}
+.reveal-delay-2{transition-delay:.16s}
+.reveal-delay-3{transition-delay:.24s}
+.reveal-delay-4{transition-delay:.32s}
+
+@media(prefers-reduced-motion:reduce){
+
+  .reveal{
+    opacity:1;
+    transform:none;
+    transition:none;
+  }
+
+}
+  /* ===== PREMIUM YORUM KARTLARI ===== */
+
+#commentsContainer .card.review{
+  position:relative;
+  overflow:hidden;
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+#commentsContainer .card.review::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:18px;
+  right:18px;
+  height:1px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(184,126,255,.55),
+    transparent
+  );
+
+  opacity:.55;
+}
+
+#commentsContainer .card.review:hover{
+  transform:translateY(-5px);
+
+  border-color:rgba(166,108,255,.4);
+
+  box-shadow:
+    0 18px 45px rgba(0,0,0,.25),
+    0 0 28px rgba(139,63,240,.09);
+}
+
+#commentsContainer .stars{
+  font-size:16px;
+  letter-spacing:2px;
+  text-shadow:0 0 12px rgba(197,138,255,.35);
+}
+
+#commentsContainer .review-name{
+  font-size:15px;
+  font-weight:800;
+}
+
+#commentsContainer .review p{
+  color:#b7bac5;
+  line-height:1.7;
+}
 </style>
 </head>
 <body class="vx-loading">
@@ -1150,7 +1234,7 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
 </div>
 </header>
 
-<section id="hizmetler" class="services">
+<section id="hizmetler" class="services reveal">
  <div class="section-title"><h2>Hizmetlerim</h2><p>İhtiyacınıza uygun profesyonel çözümler</p></div>
  <div class="grid">
   <article class="card"><div class="ico">✦</div><h3>Logo Tasarımı / Tasarım</h3><p>Markanızı en iyi şekilde yansıtan özgün, modern ve profesyonel logo tasarımları.</p><ul><li>Özgün Tasarımlar</li><li>Yüksek Çözünürlük</li><li>Tüm Formatlarda Teslim</li></ul></article>
@@ -1160,7 +1244,7 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
 </section>
 
 
-<section class="process-section">
+<section class="process-section reveal">
   <div class="container">
     <div class="section-title">
       <div class="eyebrow" style="font-size:12px;letter-spacing:2px">NASIL ÇALIŞIYORUZ?</div>
@@ -1169,25 +1253,25 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
     </div>
 
     <div class="process-grid">
-      <article class="process-card">
+      <article class="process-card reveal reveal-delay-1">
         <div class="process-number">01 / TANIŞMA</div>
         <h3>İhtiyacı Anlıyoruz</h3>
         <p>Ne istediğini, hedefini ve projenin ihtiyaçlarını netleştiriyoruz.</p>
         <i class="process-line"></i>
       </article>
-      <article class="process-card">
+      <article class="process-card reveal reveal-delay-2">
         <div class="process-number">02 / TASARIM</div>
         <h3>Fikri Şekillendiriyoruz</h3>
         <p>Modern ve markana uygun görsel dili birlikte oluşturuyoruz.</p>
         <i class="process-line"></i>
       </article>
-      <article class="process-card">
+      <article class="process-card reveal reveal-delay-3">
         <div class="process-number">03 / GELİŞTİRME</div>
         <h3>Projeyi Hazırlıyoruz</h3>
         <p>Detayları uyguluyor, gerekli düzenlemeleri yapıp son kontrolleri gerçekleştiriyoruz.</p>
         <i class="process-line"></i>
       </article>
-      <article class="process-card">
+      <article class="process-card reveal reveal-delay-4">
         <div class="process-number">04 / TESLİM</div>
         <h3>Yayına Hazır Hale Getiriyoruz</h3>
         <p>Son halini teslim ediyor ve gerektiğinde sonraki adımlarda destek oluyoruz.</p>
@@ -1196,7 +1280,7 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
   </div>
 </section>
 
-<section class="trust-section">
+<section class="trust-section reveal">
   <div class="container">
     <div class="section-title">
       <div class="eyebrow" style="font-size:12px;letter-spacing:2px">NEDEN VIVELASUISS?</div>
@@ -1205,11 +1289,11 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
     </div>
 
     <div class="trust-grid">
-      <div class="trust-item"><div class="trust-icon">✓</div><strong>Mobil Uyumlu</strong><span>Her ekranda düzgün görünüm</span></div>
-      <div class="trust-item"><div class="trust-icon">⚡</div><strong>Hızlı</strong><span>Gereksiz yüklerden uzak</span></div>
-      <div class="trust-item"><div class="trust-icon">✦</div><strong>Modern Tasarım</strong><span>Markana uygun görsel dil</span></div>
-      <div class="trust-item"><div class="trust-icon">⌕</div><strong>SEO Dostu</strong><span>Arama motorlarına uygun yapı</span></div>
-      <div class="trust-item"><div class="trust-icon">◈</div><strong>Destek</strong><span>Proje sonrası iletişim</span></div>
+      <div class="trust-item reveal reveal-delay-1"><div class="trust-icon">✓</div><strong>Mobil Uyumlu</strong><span>Her ekranda düzgün görünüm</span></div>
+      <div class="trust-item reveal reveal-delay-2"><div class="trust-icon">⚡</div><strong>Hızlı</strong><span>Gereksiz yüklerden uzak</span></div>
+      <div class="trust-item reveal reveal-delay-3"><div class="trust-icon">✦</div><strong>Modern Tasarım</strong><span>Markana uygun görsel dil</span></div>
+      <div class="trust-item reveal reveal-delay-4"><div class="trust-icon">⌕</div><strong>SEO Dostu</strong><span>Arama motorlarına uygun yapı</span></div>
+      <div class="trust-item reveal reveal-delay-1"><div class="trust-icon">◈</div><strong>Destek</strong><span>Proje sonrası iletişim</span></div>
     </div>
   </div>
 </section>
@@ -1552,6 +1636,40 @@ size();addEventListener('resize',size,{passive:true});raf=requestAnimationFrame(
 
 })();
 </script>
+ <script>
+(() => {
+
+  const revealItems =
+    document.querySelectorAll(".reveal");
+
+  if (!revealItems.length) return;
+
+  const observer =
+    new IntersectionObserver(
+      (entries, obs) => {
+
+        entries.forEach(entry => {
+
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.add("is-visible");
+
+          obs.unobserve(entry.target);
+
+        });
+
+      },
+      {
+        threshold: 0.12
+      }
+    );
+
+  revealItems.forEach(item => {
+    observer.observe(item);
+  });
+
+})();
+</script> 
 </body>
 </html>
 
