@@ -554,6 +554,83 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
 </section>
 
 <section id="yorumlar" class="reviews">
+  <div class="section-title">
+    <h2>Müşteri Yorumları</h2>
+    <p>Hizmet deneyimini paylaş.</p>
+  </div>
+
+  <div class="comments-layout">
+
+    <div class="comment-form-card">
+      <div class="comment-form-head">
+        <span class="comment-badge">✦ Yorumunu bırak</span>
+        <h3>Deneyimini paylaş</h3>
+        <p>
+          Yorumun gönderildikten sonra admin onayından geçer.
+          Onaylandığında burada yayınlanır.
+        </p>
+      </div>
+
+      <form id="commentForm" class="comment-form">
+
+        <label for="commentName">Adın</label>
+        <input
+          id="commentName"
+          type="text"
+          maxlength="40"
+          placeholder="Adını yaz"
+          required
+        >
+
+        <label for="commentRating">Puanın</label>
+        <select id="commentRating" required>
+          <option value="5">★★★★★ — 5/5</option>
+          <option value="4">★★★★☆ — 4/5</option>
+          <option value="3">★★★☆☆ — 3/5</option>
+          <option value="2">★★☆☆☆ — 2/5</option>
+          <option value="1">★☆☆☆☆ — 1/5</option>
+        </select>
+
+        <label for="commentText">Yorumun</label>
+        <textarea
+          id="commentText"
+          maxlength="500"
+          rows="5"
+          placeholder="Deneyimini yaz..."
+          required
+        ></textarea>
+
+        <button type="submit" class="btn primary comment-submit">
+          Yorumu Gönder ↗
+        </button>
+
+        <div id="commentStatus" class="comment-status"></div>
+
+      </form>
+    </div>
+
+
+    <div class="comments-list-card">
+
+      <div class="comments-list-head">
+        <div>
+          <span class="comment-badge">◉ Onaylanan yorumlar</span>
+          <h3>Ziyaretçiler ne diyor?</h3>
+        </div>
+
+        <span id="commentCount" class="comment-count">0</span>
+      </div>
+
+      <div id="commentsList" class="comments-list">
+        <div class="comments-loading">
+          Yorumlar yükleniyor...
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
  <div class="section-title"><h2>Müşteri Yorumları</h2><p>Hizmet deneyimleri</p></div>
  <div class="grid">
   <article class="card review">
