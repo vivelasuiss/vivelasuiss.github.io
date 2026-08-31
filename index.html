@@ -485,18 +485,19 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
 @keyframes homeLightSweep{0%{transform:translateX(-12%) rotate(-4deg)}100%{transform:translateX(12%) rotate(4deg)}}
 
 
-/* ===== SUPABASE CUSTOMER COMMENTS ===== */
+/* Customer comments */
 .comments-grid{grid-template-columns:repeat(3,1fr);align-items:stretch}
 .comment-loading{grid-column:1/-1;text-align:center;color:var(--muted);min-height:120px;display:grid;place-items:center}
 .comment-form-wrap{max-width:760px;margin:28px auto 0;padding:28px;border:1px solid rgba(197,140,255,.16);border-radius:18px;background:rgba(10,5,20,.38);backdrop-filter:blur(15px) saturate(145%);-webkit-backdrop-filter:blur(15px) saturate(145%)}
 .comment-form-wrap .section-title{margin-bottom:20px}
 .comment-form{display:grid;gap:12px}
-.comment-form input,.comment-form select,.comment-form textarea{width:100%;border:1px solid #292c38;border-radius:11px;background:rgba(4,2,10,.72);color:var(--white);padding:14px;font:inherit;outline:none}
+.comment-form input,.comment-form select,.comment-form textarea{width:100%;box-sizing:border-box;border:1px solid #292c38;border-radius:11px;background:rgba(4,2,10,.72);color:var(--white);padding:14px;font:inherit;outline:none}
 .comment-form input:focus,.comment-form select:focus,.comment-form textarea:focus{border-color:#8b3ff0;box-shadow:0 0 0 3px rgba(139,63,240,.12)}
 .comment-form textarea{min-height:130px;resize:vertical}
 .comment-submit{border:0;border-radius:11px;padding:14px 18px;color:white;background:linear-gradient(135deg,#903ff4,#6c28d9);font-weight:800;cursor:pointer}
 .comment-status{min-height:20px;color:#a4a8b5;font-size:13px}
-.review{display:flex;flex-direction:column;gap:5px}.review p{margin:8px 0 0}
+.review{display:flex;flex-direction:column;gap:5px}
+.review p{margin:8px 0 0}
 @media(max-width:850px){.comments-grid{grid-template-columns:1fr}.comment-form-wrap{padding:22px}}
 
 </style>
@@ -586,6 +587,7 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
     <form id="commentForm" class="comment-form">
       <input id="commentName" type="text" placeholder="Adınız" maxlength="80" required>
       <input id="commentEmail" type="email" placeholder="E-posta adresiniz" maxlength="120" required>
+
       <select id="commentRating" required>
         <option value="">Puan seçin</option>
         <option value="5">★★★★★ 5</option>
@@ -594,6 +596,7 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
         <option value="2">★★☆☆☆ 2</option>
         <option value="1">★☆☆☆☆ 1</option>
       </select>
+
       <textarea id="commentText" placeholder="Deneyiminizi yazın..." maxlength="1000" required></textarea>
       <button type="submit" class="comment-submit">Yorum Gönder</button>
       <div id="commentStatus" class="comment-status" aria-live="polite"></div>
@@ -730,11 +733,10 @@ function draw(t){x.clearRect(0,0,w,h);let tm=t*.001;for(const a of p){a.x+=a.vx+
 for(let i=0;i<p.length;i+=4){let a=p[i];for(let j=i+2;j<Math.min(i+9,p.length);j+=2){let b=p[j],dx=a.x-b.x,dy=a.y-b.y,dist=Math.hypot(dx,dy);if(dist<120){x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.strokeStyle='rgba(156,84,255,'+(.045*(1-dist/120))+')';x.lineWidth=.7;x.stroke()}}}raf=requestAnimationFrame(draw)}
 size();addEventListener('resize',size,{passive:true});raf=requestAnimationFrame(draw)})();
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   window.SUPABASE_URL = "https://ubwwdnkysazhmyqzfknh.supabase.co";
   window.SUPABASE_KEY = "sb_publishable_Qc5mc1Bmt9Zyyh1KWX75EQ_DGpr7Tso";
 </script>
 <script src="comments.js"></script>
-
-</body>
-</html>
