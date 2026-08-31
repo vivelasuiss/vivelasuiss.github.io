@@ -575,7 +575,11 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
   </div>
 
   <div id="commentsContainer" class="grid comments-grid">
-    <div class="card review comment-loading">Yorumlar yükleniyor...</div>
+    <div class="card review comment-loading">
+      <div style="font-size:28px;margin-bottom:8px;">💬</div>
+      <strong>Yorumlar hazırlanıyor…</strong>
+      <p style="margin:6px 0 0;">Onaylanan müşteri deneyimleri burada görünecek.</p>
+    </div>
   </div>
 
   <div class="comment-form-wrap">
@@ -740,3 +744,6 @@ size();addEventListener('resize',size,{passive:true});raf=requestAnimationFrame(
   window.SUPABASE_KEY = "sb_publishable_Qc5mc1Bmt9Zyyh1KWX75EQ_DGpr7Tso";
 </script>
 <script src="comments.js"></script>
+
+</body>
+</html>
