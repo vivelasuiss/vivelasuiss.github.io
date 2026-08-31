@@ -1,114 +1,209 @@
-const SUPABASE_URL = "https://ubwwdnkysazhmyqzfknh.supabase.co";
-const SUPABASE_KEY = "sb_publishable_Qc5mc1Bmt9Zyyh1KWX75EQ_DGpr7Tso";
+const SUPABASE_URL =
+  window.SUPABASE_URL ||
+  "https://ubwwdnkysazhmyqzfknh.supabase.co";
 
-const form = document.getElementById("commentForm");
-const list = document.getElementById("commentsList");
-const count = document.getElementById("commentCount");
-const status = document.getElementById("commentStatus");
+const SUPABASE_KEY =
+  window.SUPABASE_KEY ||
+  "sb_publishable_Qc5mc1Bmt9Zyyh1KWX75EQ_DGpr7Tso";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+const commentsContainer =
+  document.getElementById("commentsContainer");
+
+const commentForm =
+  document.getElementById("commentForm");
+
+const commentStatus =
+  document.getElementById("commentStatus");
+
+
+/* =========================
+   YORUMLARI GETİR
+========================= */
 
 async function loadComments() {
-  if (!list) return;
 
-  try {
-    const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/comments?select=id,name,comment,rating,created_at&approved=eq.true&order=created_at.desc`,
-      {
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${SUPABASE_KEY}`
-        }
-      }
-    );
+  if (!commentsContainer) return;
 
-    if (!response.ok) throw new Error("Yorumlar alınamadı.");
+  commentsContainer.innerHTML =
+    `<p>Yorumlar yükleniyor...</p>`;
 
-    const comments = await response.json();
+  const { data, error } =
+    await supabaseClient
+      .from("comments")
+      .select("*")
+      .eq("approved", true)
+      .order("created_at", {
+        ascending: false
+      });
 
-    count.textContent = comments.length;
+  if (error) {
 
-    if (!comments.length) {
-      list.innerHTML = `
-        <div class="comments-empty">
-          Henüz onaylanmış yorum yok.<br>
-          <strong>İlk yorumu sen bırakabilirsin.</strong>
-        </div>
-      `;
-      return;
-    }
+    console.error("Yorumlar alınamadı:", error);
 
-    list.innerHTML = comments.map(item => {
-      const rating = Math.max(1, Math.min(5, Number(item.rating) || 5));
-      const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
+    commentsContainer.innerHTML =
+      `<p>Yorumlar şu anda yüklenemiyor.</p>`;
+
+    return;
+  }
+
+  if (!data || data.length === 0) {
+
+    commentsContainer.innerHTML =
+      `<p>Henüz onaylanmış yorum bulunmuyor.</p>`;
+
+    return;
+  }
+
+  commentsContainer.innerHTML =
+    data.map(comment => {
+
+      const name =
+        escapeHTML(
+          comment.name || "Müşteri"
+        );
+
+      const text =
+        escapeHTML(
+          comment.comment ||
+          comment.text ||
+          ""
+        );
+
+      const rating =
+        Math.max(
+          1,
+          Math.min(
+            5,
+            Number(comment.rating) || 5
+          )
+        );
+
+      const stars =
+        "★".repeat(rating) +
+        "☆".repeat(5 - rating);
 
       return `
-        <article class="comment-item">
-          <div class="comment-top">
-            <span class="comment-name">${escapeHTML(item.name)}</span>
-            <span class="comment-date">${formatDate(item.created_at)}</span>
+        <article class="card review">
+
+          <div class="review-name">
+            ${name}
           </div>
-          <div class="comment-stars">${stars}</div>
-          <div class="comment-body">${escapeHTML(item.comment)}</div>
+
+          <div class="stars">
+            ${stars}
+            <small style="color:#a4a8b5;letter-spacing:0">
+              ${rating}.0
+            </small>
+          </div>
+
+          <p>
+            ${text}
+          </p>
+
         </article>
       `;
+
     }).join("");
-
-  } catch (error) {
-    list.innerHTML = `
-      <div class="comments-empty">
-        Yorumlar şu anda yüklenemiyor.
-      </div>
-    `;
-    console.error(error);
-  }
 }
 
-async function submitComment(event) {
-  event.preventDefault();
 
-  const name = document.getElementById("commentName").value.trim();
-  const comment = document.getElementById("commentText").value.trim();
-  const rating = Number(document.getElementById("commentRating").value);
+/* =========================
+   YORUM GÖNDER
+========================= */
 
-  if (!name || !comment) return;
+if (commentForm) {
 
-  status.textContent = "Yorum gönderiliyor...";
+  commentForm.addEventListener(
+    "submit",
+    async function(event) {
 
-  try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/comments`, {
-      method: "POST",
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`,
-        "Content-Type": "application/json",
-        Prefer: "return=minimal"
-      },
-      body: JSON.stringify({
-        name,
-        comment,
-        rating,
-        approved: false
-      })
-    });
+      event.preventDefault();
 
-    if (!response.ok) {
-      const error = await response.text();
-      console.error(error);
-      throw new Error("Yorum gönderilemedi.");
+      const name =
+        document
+          .getElementById("commentName")
+          ?.value
+          .trim();
+
+      const email =
+        document
+          .getElementById("commentEmail")
+          ?.value
+          .trim();
+
+      const rating =
+        Number(
+          document
+            .getElementById("commentRating")
+            ?.value
+        );
+
+      const comment =
+        document
+          .getElementById("commentText")
+          ?.value
+          .trim();
+
+      if (!name || !email || !rating || !comment) {
+
+        commentStatus.textContent =
+          "Lütfen tüm alanları doldurun.";
+
+        return;
+      }
+
+      commentStatus.textContent =
+        "Yorum gönderiliyor...";
+
+      const { error } =
+        await supabaseClient
+          .from("comments")
+          .insert([
+            {
+              name: name,
+              email: email,
+              rating: rating,
+              comment: comment,
+              approved: false
+            }
+          ]);
+
+      if (error) {
+
+        console.error(
+          "Yorum gönderilemedi:",
+          error
+        );
+
+        commentStatus.textContent =
+          "Yorum gönderilemedi. Lütfen tekrar deneyin.";
+
+        return;
+      }
+
+      commentForm.reset();
+
+      commentStatus.textContent =
+        "Yorumunuz gönderildi. Admin onayından sonra yayınlanacaktır.";
+
     }
+  );
 
-    form.reset();
-
-    status.textContent =
-      "✓ Yorumun gönderildi. Admin onayından sonra yayınlanacak.";
-
-  } catch (error) {
-    status.textContent =
-      "Yorum gönderilirken bir hata oluştu.";
-    console.error(error);
-  }
 }
+
+
+/* =========================
+   GÜVENLİ HTML
+========================= */
 
 function escapeHTML(value) {
+
   return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -117,16 +212,9 @@ function escapeHTML(value) {
     .replaceAll("'", "&#039;");
 }
 
-function formatDate(date) {
-  return new Date(date).toLocaleDateString("tr-TR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric"
-  });
-}
 
-if (form) {
-  form.addEventListener("submit", submitComment);
-}
+/* =========================
+   BAŞLAT
+========================= */
 
 loadComments();
