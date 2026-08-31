@@ -1181,13 +1181,6 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
     transform .12s cubic-bezier(.2,.8,.2,1),
     filter .3s ease;
 }
-
-.cube-stage:hover .cube{
-  filter:
-    drop-shadow(0 0 18px rgba(166,108,255,.22))
-    drop-shadow(0 0 40px rgba(108,40,217,.12));
-}
-
 .cube-face{
   transition:
     border-color .3s ease,
@@ -1254,6 +1247,21 @@ section::before{
 section:first-of-type::before{
   display:none;
 }
+
+/* ===== CUBE HOVER SAFE GLOW ===== */
+#cubeStage:hover .cube-glow{
+  opacity:.98;
+  transform:scale(1.08);
+}
+#cubeStage{
+  transform-style:preserve-3d;
+  -webkit-transform-style:preserve-3d;
+}
+#vxCube{
+  transform-style:preserve-3d !important;
+  -webkit-transform-style:preserve-3d !important;
+}
+
 </style>
 </head>
 <body class="vx-loading">
