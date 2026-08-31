@@ -708,6 +708,99 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
   .comment-submit{justify-content:center}
 }
 
+
+/* ===== VIVELASUISS PREMIUM ENHANCEMENTS ===== */
+.card:not(.review){
+  transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease,background .28s ease;
+}
+.card:not(.review):hover{
+  transform:translateY(-7px);
+  border-color:rgba(166,108,255,.38);
+  box-shadow:0 22px 55px rgba(0,0,0,.28),0 0 28px rgba(139,63,240,.08);
+}
+.btn,.cta,.contact-btn,.comment-submit{
+  transition:transform .22s ease,filter .22s ease,box-shadow .22s ease;
+}
+.btn:hover,.cta:hover,.contact-btn:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.08);
+  box-shadow:0 12px 30px rgba(108,40,217,.22);
+}
+.services{
+  position:relative;
+  overflow:hidden;
+}
+.services:before{
+  content:"";
+  position:absolute;
+  width:320px;height:320px;
+  right:-180px;top:-190px;
+  border-radius:50%;
+  background:rgba(139,63,240,.12);
+  filter:blur(60px);
+  pointer-events:none;
+}
+.process-section,.trust-section{padding-top:68px}
+.process-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+.process-card{
+  position:relative;
+  padding:24px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  background:rgba(11,7,20,.48);
+  backdrop-filter:blur(13px);
+  -webkit-backdrop-filter:blur(13px);
+  transition:transform .25s ease,border-color .25s ease;
+}
+.process-card:hover{transform:translateY(-5px);border-color:rgba(166,108,255,.35)}
+.process-number{
+  font-size:12px;font-weight:900;letter-spacing:2px;color:#a866ff;
+}
+.process-card h3{margin:12px 0 7px;font-size:16px}
+.process-card p{margin:0;color:#999eac;font-size:13px;line-height:1.6}
+.process-line{
+  position:absolute;top:31px;right:-18px;width:35px;height:1px;
+  background:linear-gradient(90deg,rgba(166,108,255,.45),transparent);
+}
+.trust-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:12px;
+}
+.trust-item{
+  padding:19px 15px;text-align:center;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;background:rgba(11,7,20,.42);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.trust-icon{font-size:22px;margin-bottom:8px}
+.trust-item strong{display:block;font-size:12px}
+.trust-item span{display:block;color:#818694;font-size:10px;margin-top:5px}
+@media(max-width:900px){
+  .process-grid{grid-template-columns:repeat(2,1fr)}
+  .trust-grid{grid-template-columns:repeat(3,1fr)}
+  .process-line{display:none}
+}
+@media(max-width:600px){
+  .process-grid,.trust-grid{grid-template-columns:1fr}
+}
+
+
+@media(max-width:850px){
+  nav{position:sticky}
+  nav .nav.is-open{
+    display:flex!important;
+    position:absolute;left:4%;right:4%;top:68px;height:auto;
+    flex-direction:column;align-items:stretch;gap:0;padding:8px;
+    background:rgba(9,4,17,.94);border:1px solid rgba(166,108,255,.2);
+    border-radius:14px;backdrop-filter:blur(18px);z-index:200;
+  }
+  nav .nav.is-open a{padding:13px 14px;border-radius:9px}
+  nav .nav.is-open a:hover{background:rgba(139,63,240,.1)}
+}
+
 </style>
 </head>
 <body class="vx-loading">
@@ -740,6 +833,8 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
     <a href="#yorumlar">Yorumlar</a><a href="#iletisim">İletişim</a>
   </div>
   <a class="cta" href="https://wa.me/905538393244?text=Merhaba%20vivelasuiss%2C%20hizmetleriniz%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank">İletişime Geç ↗</a>
+
+<button id="vx-mobile-menu" aria-label="Menüyü aç" aria-expanded="false" style="display:none;border:1px solid rgba(166,108,255,.25);background:rgba(20,10,35,.7);color:#fff;border-radius:10px;padding:10px 12px;font-size:18px;cursor:pointer">☰</button>
 </nav>
 
 <header class="hero" id="anasayfa">
@@ -774,6 +869,61 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
   <article class="card"><div class="ico">▣</div><h3>Bilgisayar / Teknik Destek</h3><p>Bilgisayar sorunlarınıza hızlı ve etkili çözümler sunuyorum.</p><ul><li>Yazılım Kurulumu</li><li>Sistem Hızlandırma</li><li>Virüs Temizleme</li><li>Uzaktan Destek</li></ul></article>
   <article class="card"><div class="ico">文</div><h3>Metin Çeviri<br>(İngilizce & Fransızca)</h3><p>İngilizce ↔ Türkçe ve Fransızca ↔ Türkçe çeviri hizmetleri.</p><ul><li>Doğru ve Akıcı Çeviri</li><li>Hızlı Teslimat</li><li>Gizlilik Odaklı</li></ul></article>
  </div>
+</section>
+
+
+<section class="process-section">
+  <div class="container">
+    <div class="section-title">
+      <div class="eyebrow" style="font-size:12px;letter-spacing:2px">NASIL ÇALIŞIYORUZ?</div>
+      <h2>Fikirden yayına, net bir süreç.</h2>
+      <p>Her projeyi sade, hızlı ve şeffaf bir akışla ilerletiyoruz.</p>
+    </div>
+
+    <div class="process-grid">
+      <article class="process-card">
+        <div class="process-number">01 / TANIŞMA</div>
+        <h3>İhtiyacı Anlıyoruz</h3>
+        <p>Ne istediğini, hedefini ve projenin ihtiyaçlarını netleştiriyoruz.</p>
+        <i class="process-line"></i>
+      </article>
+      <article class="process-card">
+        <div class="process-number">02 / TASARIM</div>
+        <h3>Fikri Şekillendiriyoruz</h3>
+        <p>Modern ve markana uygun görsel dili birlikte oluşturuyoruz.</p>
+        <i class="process-line"></i>
+      </article>
+      <article class="process-card">
+        <div class="process-number">03 / GELİŞTİRME</div>
+        <h3>Projeyi Hazırlıyoruz</h3>
+        <p>Detayları uyguluyor, gerekli düzenlemeleri yapıp son kontrolleri gerçekleştiriyoruz.</p>
+        <i class="process-line"></i>
+      </article>
+      <article class="process-card">
+        <div class="process-number">04 / TESLİM</div>
+        <h3>Yayına Hazır Hale Getiriyoruz</h3>
+        <p>Son halini teslim ediyor ve gerektiğinde sonraki adımlarda destek oluyoruz.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="trust-section">
+  <div class="container">
+    <div class="section-title">
+      <div class="eyebrow" style="font-size:12px;letter-spacing:2px">NEDEN VIVELASUISS?</div>
+      <h2>İşin her adımında kalite.</h2>
+      <p>Profesyonel görünüm, temiz uygulama ve kullanıcı odaklı yaklaşım.</p>
+    </div>
+
+    <div class="trust-grid">
+      <div class="trust-item"><div class="trust-icon">✓</div><strong>Mobil Uyumlu</strong><span>Her ekranda düzgün görünüm</span></div>
+      <div class="trust-item"><div class="trust-icon">⚡</div><strong>Hızlı</strong><span>Gereksiz yüklerden uzak</span></div>
+      <div class="trust-item"><div class="trust-icon">✦</div><strong>Modern Tasarım</strong><span>Markana uygun görsel dil</span></div>
+      <div class="trust-item"><div class="trust-icon">⌕</div><strong>SEO Dostu</strong><span>Arama motorlarına uygun yapı</span></div>
+      <div class="trust-item"><div class="trust-icon">◈</div><strong>Destek</strong><span>Proje sonrası iletişim</span></div>
+    </div>
+  </div>
 </section>
 
 <section id="yorumlar" class="reviews">
@@ -959,3 +1109,27 @@ size();addEventListener('resize',size,{passive:true});raf=requestAnimationFrame(
 
 </body>
 </html>
+
+<script>
+(() => {
+  const nav = document.querySelector('nav');
+  const links = document.querySelector('nav .nav');
+  const btn = document.getElementById('vx-mobile-menu');
+  if (!nav || !links || !btn) return;
+  const sync = () => { btn.style.display = window.innerWidth <= 850 ? 'block' : 'none'; };
+  sync();
+  window.addEventListener('resize', sync);
+  btn.addEventListener('click', () => {
+    const open = links.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? '×' : '☰';
+  });
+  links.addEventListener('click', e => {
+    if (e.target.closest('a')) {
+      links.classList.remove('is-open');
+      btn.setAttribute('aria-expanded','false');
+      btn.textContent='☰';
+    }
+  });
+})();
+</script>
