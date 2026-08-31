@@ -1,0 +1,257 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(142, 53, 255, .20), transparent 35%),
+    radial-gradient(circle at 80% 90%, rgba(91, 33, 182, .18), transparent 35%),
+    #07040d;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.admin-page {
+  width: min(1100px, calc(100% - 30px));
+  margin: 0 auto;
+  padding: 60px 0;
+}
+
+.panel {
+  border: 1px solid rgba(207, 157, 255, .16);
+  background: rgba(12, 7, 21, .72);
+  border-radius: 28px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, .35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.login-panel {
+  width: min(430px, 100%);
+  margin: 80px auto;
+  padding: 35px;
+}
+
+.brand {
+  color: #d7adff;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .18em;
+}
+
+h1 {
+  margin: 10px 0;
+  font-size: 32px;
+}
+
+.login-panel p,
+.dashboard-header p {
+  color: rgba(238, 228, 250, .58);
+}
+
+#loginForm {
+  display: grid;
+  gap: 13px;
+  margin-top: 25px;
+}
+
+#loginForm input {
+  width: 100%;
+  border: 1px solid rgba(207, 157, 255, .18);
+  background: rgba(4, 2, 9, .7);
+  color: white;
+  border-radius: 14px;
+  padding: 14px;
+  outline: none;
+}
+
+#loginForm input:focus {
+  border-color: rgba(181, 111, 255, .75);
+  box-shadow: 0 0 0 3px rgba(142, 53, 255, .12);
+}
+
+#loginForm button,
+.action-button {
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 18px;
+  cursor: pointer;
+  color: white;
+  font-weight: 800;
+  background: linear-gradient(135deg, #8e35ff, #b56fff);
+  transition: transform .2s, opacity .2s;
+}
+
+#loginForm button:hover,
+.action-button:hover {
+  transform: translateY(-2px);
+}
+
+#loginStatus,
+#adminStatus {
+  min-height: 20px;
+  margin-top: 8px;
+  color: #d8b9f7;
+  font-size: 13px;
+}
+
+.dashboard {
+  padding: 32px;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.eyebrow {
+  color: #c996ff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+
+.logout {
+  border: 1px solid rgba(207, 157, 255, .2);
+  background: rgba(255, 255, 255, .04);
+  color: white;
+  border-radius: 12px;
+  padding: 11px 16px;
+  cursor: pointer;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin: 30px 0;
+}
+
+.stat {
+  padding: 20px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .035);
+  border: 1px solid rgba(207, 157, 255, .11);
+}
+
+.stat span {
+  display: block;
+  color: rgba(238, 228, 250, .52);
+  font-size: 13px;
+}
+
+.stat strong {
+  display: block;
+  margin-top: 7px;
+  font-size: 28px;
+}
+
+.comments-container {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-comment {
+  padding: 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(207, 157, 255, .13);
+  background: rgba(255, 255, 255, .025);
+}
+
+.admin-comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.admin-comment-name {
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.admin-comment-date {
+  color: rgba(238, 228, 250, .42);
+  font-size: 11px;
+}
+
+.admin-stars {
+  color: #d4a5ff;
+  margin: 8px 0;
+  letter-spacing: 2px;
+}
+
+.admin-comment-text {
+  color: rgba(242, 235, 249, .75);
+  line-height: 1.6;
+  margin: 12px 0 18px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.approve-button {
+  background: linear-gradient(135deg, #6d28d9, #a855f7);
+}
+
+.delete-button {
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255, 255, 255, .12);
+}
+
+.empty {
+  text-align: center;
+  padding: 45px 20px;
+  color: rgba(238, 228, 250, .48);
+  border: 1px dashed rgba(207, 157, 255, .16);
+  border-radius: 18px;
+}
+
+@media (max-width: 650px) {
+  .admin-page {
+    padding: 25px 0;
+  }
+
+  .login-panel {
+    margin: 30px auto;
+    padding: 25px;
+  }
+
+  .dashboard {
+    padding: 22px;
+  }
+
+  .dashboard-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-comment-header {
+    flex-direction: column;
+  }
+
+  .admin-actions {
+    flex-direction: column;
+  }
+
+  .admin-actions button {
+    width: 100%;
+  }
+}
