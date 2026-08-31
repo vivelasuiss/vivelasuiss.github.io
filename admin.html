@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Paneli — Vivelasuiss</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+  <main class="admin-page">
+
+    <!-- Giriş -->
+    <section id="loginPanel" class="panel login-panel">
+      <div class="brand">VIVELASUISS</div>
+
+      <h1>Admin Paneli</h1>
+      <p>Yönetim paneline giriş yap.</p>
+
+      <form id="loginForm">
+        <input
+          id="email"
+          type="email"
+          placeholder="E-posta"
+          autocomplete="email"
+          required
+        >
+
+        <input
+          id="password"
+          type="password"
+          placeholder="Parola"
+          autocomplete="current-password"
+          required
+        >
+
+        <button type="submit">
+          Giriş Yap
+        </button>
+
+        <div id="loginStatus"></div>
+      </form>
+    </section>
+
+
+    <!-- Panel -->
+    <section id="adminPanel" class="panel dashboard" hidden>
+
+      <header class="dashboard-header">
+        <div>
+          <span class="eyebrow">YÖNETİM</span>
+          <h1>Yorumlar</h1>
+          <p>Gelen yorumları buradan yönetebilirsin.</p>
+        </div>
+
+        <button id="logoutButton" class="logout">
+          Çıkış Yap
+        </button>
+      </header>
+
+      <div class="stats">
+        <div class="stat">
+          <span>Bekleyen</span>
+          <strong id="pendingCount">0</strong>
+        </div>
+
+        <div class="stat">
+          <span>Onaylanan</span>
+          <strong id="approvedCount">0</strong>
+        </div>
+      </div>
+
+      <div id="adminStatus"></div>
+
+      <div id="commentsContainer" class="comments-container">
+        Yorumlar yükleniyor...
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="admin.js"></script>
+
+</body>
+</html>
