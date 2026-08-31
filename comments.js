@@ -1,5 +1,5 @@
 const SUPABASE_URL = "https://ubwwdnkysazhmyqzfknh.supabase.co";
-const SUPABASE_KEY = "BURAYA_PUBLISHABLE_KEY";
+const SUPABASE_KEY = "sb_publishable_Qc5mc1Bmt9Zyyh1KWX75EQ_DGpr7Tso";
 
 const form = document.getElementById("commentForm");
 const list = document.getElementById("commentsList");
