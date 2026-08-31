@@ -2,8 +2,14 @@
 
 (() => {
 
-  const SUPABASE_URL = window.SUPABASE_URL;
-  const SUPABASE_KEY = window.SUPABASE_KEY;
+  const SUPABASE_URL =
+    window.SUPABASE_URL ||
+    "https://ubwwdnkysazhmyqzfknh.supabase.co";
+
+  const SUPABASE_KEY =
+    window.SUPABASE_KEY ||
+    "sb_publishable_Qc5mc1Bmt9Zyyh1KWX75EQ_DGpr7Tso";
+
 
   const container =
     document.getElementById("commentsContainer");
@@ -15,43 +21,27 @@
     document.getElementById("commentStatus");
 
 
-  /* =========================
-     KONTROLLER
-  ========================= */
-
   if (!container) {
     console.error("commentsContainer bulunamadı.");
     return;
   }
 
+
   if (!window.supabase) {
     console.error("Supabase JS yüklenmemiş.");
+
     container.innerHTML = `
       <div class="card review comment-loading">
         <strong>Yorumlar şu anda yüklenemiyor.</strong>
         <p>Lütfen daha sonra tekrar deneyin.</p>
       </div>
     `;
-    return;
-  }
 
-  if (!SUPABASE_URL || !SUPABASE_KEY) {
-    console.error("Supabase URL veya Publishable Key bulunamadı.");
-    container.innerHTML = `
-      <div class="card review comment-loading">
-        <strong>Yorumlar şu anda yüklenemiyor.</strong>
-        <p>Lütfen daha sonra tekrar deneyin.</p>
-      </div>
-    `;
     return;
   }
 
 
-  /* =========================
-     SUPABASE
-  ========================= */
-
-  const supabaseClient =
+  const db =
     window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_KEY
@@ -59,7 +49,7 @@
 
 
   /* =========================
-     GÜVENLİ HTML
+     HTML GÜVENLİĞİ
   ========================= */
 
   function escapeHTML(value) {
@@ -75,12 +65,12 @@
 
 
   /* =========================
-     YORUMLARI EKRANA BAS
+     YORUMLARI GÖSTER
   ========================= */
 
-  function renderComments(comments) {
+  function renderComments(data) {
 
-    if (!comments || comments.length === 0) {
+    if (!data || data.length === 0) {
 
       container.innerHTML = `
         <div class="card review comment-loading">
@@ -104,87 +94,91 @@
     }
 
 
-    container.innerHTML =
-      comments.map(item => {
+    container.innerHTML = data.map(comment => {
 
-        const name =
-          escapeHTML(
-            item.name || "Müşteri"
+      const name =
+        escapeHTML(
+          comment.name || "Müşteri"
+        );
+
+
+      const text =
+        escapeHTML(
+          comment.comment || ""
+        );
+
+
+      const rating =
+        Math.max(
+          1,
+          Math.min(
+            5,
+            Number(comment.rating) || 5
+          )
+        );
+
+
+      const stars =
+        "★".repeat(rating) +
+        "☆".repeat(5 - rating);
+
+
+      let date = "";
+
+      if (comment.created_at) {
+
+        date =
+          new Intl.DateTimeFormat(
+            "tr-TR",
+            {
+              dateStyle: "medium"
+            }
+          ).format(
+            new Date(comment.created_at)
           );
 
-
-        const text =
-          escapeHTML(
-            item.comment ??
-            item.text ??
-            ""
-          );
+      }
 
 
-        let rating =
-          Number(item.rating) || 5;
+      return `
+        <article class="card review">
 
+          <div class="review-name">
+            ${name}
+          </div>
 
-        rating =
-          Math.max(
-            1,
-            Math.min(5, rating)
-          );
+          <div
+            class="stars"
+            aria-label="${rating} / 5"
+          >
+            ${stars}
+          </div>
 
+          <p>
+            ${text}
+          </p>
 
-        const stars =
-          "★".repeat(rating) +
-          "☆".repeat(5 - rating);
+          ${
+            date
+              ? `<small style="color:#8f93a3;">${date}</small>`
+              : ""
+          }
 
+        </article>
+      `;
 
-        return `
-
-          <article class="card review">
-
-            <div
-              class="stars"
-              aria-label="${rating} yıldız"
-            >
-              ${stars}
-
-              <small
-                style="
-                  color:#a4a8b5;
-                  letter-spacing:0;
-                "
-              >
-                ${rating}.0
-              </small>
-
-            </div>
-
-
-            <div class="review-name">
-              ${name}
-            </div>
-
-
-            <p>
-              ${text}
-            </p>
-
-          </article>
-
-        `;
-
-      }).join("");
+    }).join("");
 
   }
 
 
   /* =========================
-     YORUMLARI SUPABASE'DEN AL
+     SUPABASE'DEN YORUMLARI AL
   ========================= */
 
   async function loadComments() {
 
     container.innerHTML = `
-
       <div class="card review comment-loading">
 
         <div style="font-size:28px;margin-bottom:8px;">
@@ -200,45 +194,39 @@
         </p>
 
       </div>
-
     `;
 
 
     const {
       data,
       error
-    } =
-      await supabaseClient
-
-        .from("comments")
-
-        .select(
-          "id,name,comment,rating,approved,created_at"
-        )
-
-        .eq(
-          "approved",
-          true
-        )
-
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        );
+    } = await db
+      .from("comments")
+      .select(
+        "id,name,rating,comment,approved,created_at"
+      )
+      .eq(
+        "approved",
+        true
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      )
+      .limit(50);
 
 
     if (error) {
 
       console.error(
-        "Supabase yorum hatası:",
+        "Yorumlar alınamadı:",
         error
       );
 
 
       container.innerHTML = `
-
         <div class="card review comment-loading">
 
           <strong>
@@ -250,16 +238,13 @@
           </p>
 
         </div>
-
       `;
 
       return;
     }
 
 
-    renderComments(
-      data || []
-    );
+    renderComments(data || []);
 
   }
 
@@ -284,13 +269,6 @@
             .trim();
 
 
-        const email =
-          document
-            .getElementById("commentEmail")
-            ?.value
-            .trim();
-
-
         const rating =
           Number(
             document
@@ -306,9 +284,13 @@
             .trim();
 
 
+        /* E-posta inputu index'te olabilir,
+           fakat Supabase tablosunda email kolonu
+           olmadığı için veritabanına göndermiyoruz. */
+
+
         if (
           !name ||
-          !email ||
           !rating ||
           !comment
         ) {
@@ -316,7 +298,35 @@
           if (status) {
 
             status.textContent =
-              "Lütfen tüm alanları doldurun.";
+              "Lütfen adınızı, puanınızı ve yorumunuzu doldurun.";
+
+          }
+
+          return;
+
+        }
+
+
+        if (name.length < 2 || name.length > 40) {
+
+          if (status) {
+
+            status.textContent =
+              "İsim 2-40 karakter arasında olmalıdır.";
+
+          }
+
+          return;
+
+        }
+
+
+        if (comment.length < 5 || comment.length > 500) {
+
+          if (status) {
+
+            status.textContent =
+              "Yorum 5-500 karakter arasında olmalıdır.";
 
           }
 
@@ -333,30 +343,39 @@
         }
 
 
+        const button =
+          form.querySelector(
+            "button[type='submit']"
+          );
+
+
+        if (button) {
+
+          button.disabled = true;
+
+        }
+
+
+        /*
+          ÖNEMLİ:
+          email göndermiyoruz.
+          approved da göndermiyoruz.
+          Supabase default olarak approved=false yapıyor.
+        */
+
         const {
           error
-        } =
-          await supabaseClient
+        } = await db
+          .from("comments")
+          .insert({
 
-            .from("comments")
+            name: name,
 
-            .insert([
+            rating: rating,
 
-              {
+            comment: comment
 
-                name: name,
-
-                email: email,
-
-                rating: rating,
-
-                comment: comment,
-
-                approved: false
-
-              }
-
-            ]);
+          });
 
 
         if (error) {
@@ -374,6 +393,13 @@
 
           }
 
+
+          if (button) {
+
+            button.disabled = false;
+
+          }
+
           return;
 
         }
@@ -385,7 +411,14 @@
         if (status) {
 
           status.textContent =
-            "Yorumunuz gönderildi. Admin onayından sonra yayınlanacaktır.";
+            "Yorumun gönderildi. Admin onayından sonra yayınlanacak.";
+
+        }
+
+
+        if (button) {
+
+          button.disabled = false;
 
         }
 
