@@ -1145,59 +1145,178 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
     </div>
   </div>
 </section>
-<section id="yorumlar" class="reviews">
+ <section id="yorumlar" class="reviews">
+
   <div class="reviews-heading">
+
     <div class="reviews-heading-copy">
-      <span class="reviews-kicker">GERÇEK DENEYİMLER</span>
-      <h2>Müşteri Yorumları</h2>
-      <p>Hizmet alan müşterilerimizin onaylanan deneyimleri.</p>
+
+      <span class="reviews-kicker">
+        GERÇEK DENEYİMLER
+      </span>
+
+      <h2>
+        Müşteri Yorumları
+      </h2>
+
+      <p>
+        Hizmet alan müşterilerimizin onaylanan deneyimleri.
+      </p>
+
     </div>
+
     <div class="reviews-badge">
+
       <span class="reviews-badge-dot"></span>
+
       Onaylı yorumlar
+
     </div>
-  <div id="commentsContainer" class="comments-grid">
-    <div class="comment-empty">
-      <div class="comment-empty-icon">💬</div>
-      <strong>Henüz yayınlanmış yorum yok</strong>
-      <p>İlk deneyimini paylaş. Yorumun onaylandığında burada görünecek.</p>
-    </div>
+
   </div>
+
+
+  <div
+    id="commentsContainer"
+    class="comments-grid"
+  >
+
+    <div class="comment-empty">
+
+      <div class="comment-empty-icon">
+        💬
+      </div>
+
+      <strong>
+        Henüz yayınlanmış yorum yok
+      </strong>
+
+      <p>
+        İlk deneyimini paylaş.
+        Yorumun onaylandığında burada görünecek.
+      </p>
+
+    </div>
+
+  </div>
+
 
   <div class="comment-form-wrap">
+
     <div class="comment-form-intro">
-      <span class="reviews-kicker">DENEYİMİNİ PAYLAŞ</span>
-      <h2>Sen de yorumunu bırak</h2>
-      <p>Yorumun gönderildikten sonra kontrol edilir ve onaylandığında herkese açık olarak yayınlanır.</p>
+
+      <span class="reviews-kicker">
+        DENEYİMİNİ PAYLAŞ
+      </span>
+
+      <h2>
+        Sen de yorumunu bırak
+      </h2>
+
+      <p>
+        Yorumun gönderildikten sonra kontrol edilir
+        ve onaylandığında herkese açık olarak yayınlanır.
+      </p>
+
     </div>
 
-    <form id="commentForm" class="comment-form">
+
+    <form
+      id="commentForm"
+      class="comment-form"
+    >
+
       <div class="comment-form-row">
-        <input id="commentName" type="text" placeholder="Adınız" maxlength="80" autocomplete="name" required>
-        <input id="commentEmail" type="email" placeholder="E-posta adresiniz" maxlength="120" autocomplete="email" required>
+
+        <input
+          id="commentName"
+          type="text"
+          placeholder="Adınız"
+          maxlength="80"
+          autocomplete="name"
+          required
+        >
+
+        <input
+          id="commentEmail"
+          type="email"
+          placeholder="E-posta adresiniz"
+          maxlength="120"
+          autocomplete="email"
+          required
+        >
+
       </div>
 
-      <select id="commentRating" required>
-        <option value="">Puanınızı seçin</option>
-        <option value="5">★★★★★ 5 — Mükemmel</option>
-        <option value="4">★★★★☆ 4 — Çok iyi</option>
-        <option value="3">★★★☆☆ 3 — İyi</option>
-        <option value="2">★★☆☆☆ 2 — Geliştirilebilir</option>
-        <option value="1">★☆☆☆☆ 1 — Kötü</option>
+
+      <select
+        id="commentRating"
+        required
+      >
+
+        <option value="">
+          Puanınızı seçin
+        </option>
+
+        <option value="5">
+          ★★★★★ 5 — Mükemmel
+        </option>
+
+        <option value="4">
+          ★★★★☆ 4 — Çok iyi
+        </option>
+
+        <option value="3">
+          ★★★☆☆ 3 — İyi
+        </option>
+
+        <option value="2">
+          ★★☆☆☆ 2 — Geliştirilebilir
+        </option>
+
+        <option value="1">
+          ★☆☆☆☆ 1 — Kötü
+        </option>
+
       </select>
 
-      <textarea id="commentText" placeholder="Deneyiminizi kısaca anlatın..." maxlength="1000" required></textarea>
+
+      <textarea
+        id="commentText"
+        placeholder="Deneyiminizi kısaca anlatın..."
+        maxlength="1000"
+        required
+      ></textarea>
+
 
       <div class="comment-form-bottom">
-        <span class="comment-note">Yorumunuz admin onayından sonra yayınlanır.</span>
-        <button type="submit" class="comment-submit">Yorum Gönder <span>→</span></button>
+
+        <span class="comment-note">
+          Yorumunuz admin onayından sonra yayınlanır.
+        </span>
+
+        <button
+          type="submit"
+          class="comment-submit"
+        >
+          Yorum Gönder
+          <span>→</span>
+        </button>
+
       </div>
 
-      <div id="commentStatus" class="comment-status" aria-live="polite"></div>
-    </form>
-  </div>
-</section>
 
+      <div
+        id="commentStatus"
+        class="comment-status"
+        aria-live="polite"
+      ></div>
+
+    </form>
+
+  </div>
+
+</section>
 
 
 <section id="iletisim">
