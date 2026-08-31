@@ -183,6 +183,10 @@ function renderComments(comments) {
               <div class="admin-comment-name">
                 ${escapeHTML(comment.name)}
               </div>
+              
+              <div class="admin-comment-email">
+             ✉ ${escapeHTML(comment.email || "E-posta belirtilmemiş")}
+              </div>
 
               <div class="admin-stars">
                 ${stars}
