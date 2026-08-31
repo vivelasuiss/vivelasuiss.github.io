@@ -1,7 +1,7 @@
 const SUPABASE_URL = "https://ubwwdnkysazhmyqzfknh.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Qc5mc1Bmt9Zyyh1KWX75EQ_DGpr7Tso";
 
-const supabase = window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
@@ -30,7 +30,7 @@ const adminStatus =
 
 
 async function checkSession() {
-  const { data, error } = await supabase.auth.getSession();
+  const { data, error } = await supabaseClient.auth.getSession();
 
   if (error) {
     console.error(error);
@@ -67,7 +67,7 @@ loginForm.addEventListener("submit", async (event) => {
   }
 
   const { data, error } =
-    await supabase.auth.signInWithPassword({
+    await supabaseClient.auth.signInWithPassword({
       email,
       password
     });
@@ -84,7 +84,7 @@ loginForm.addEventListener("submit", async (event) => {
     data.user.email?.toLowerCase() !==
       ADMIN_EMAIL.toLowerCase()
   ) {
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
 
     loginStatus.textContent =
       "Bu hesap admin paneline erişemez.";
@@ -101,7 +101,7 @@ loginForm.addEventListener("submit", async (event) => {
 
 
 logoutButton.addEventListener("click", async () => {
-  await supabase.auth.signOut();
+  await supabaseClient.auth.signOut();
   showLogin();
 });
 
@@ -110,7 +110,7 @@ async function loadComments() {
 
   adminStatus.textContent = "Yorumlar yükleniyor...";
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from("comments")
     .select("*")
     .order("created_at", {
@@ -241,7 +241,7 @@ function renderComments(comments) {
 
 async function approveComment(id) {
 
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .from("comments")
     .update({
       approved: true
@@ -261,7 +261,7 @@ async function approveComment(id) {
 
 async function unapproveComment(id) {
 
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .from("comments")
     .update({
       approved: false
@@ -288,7 +288,7 @@ async function deleteComment(id) {
 
   if (!confirmed) return;
 
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .from("comments")
     .delete()
     .eq("id", id);
