@@ -800,7 +800,40 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
   nav .nav.is-open a{padding:13px 14px;border-radius:9px}
   nav .nav.is-open a:hover{background:rgba(139,63,240,.1)}
 }
+/* ===== PREMIUM SERVICE HOVER ===== */
+.card:not(.review){
+  transition:
+    transform .28s ease,
+    border-color .28s ease,
+    box-shadow .28s ease;
+}
 
+.card:not(.review):hover{
+  transform:translateY(-6px);
+  border-color:rgba(166,108,255,.38);
+  box-shadow:
+    0 18px 48px rgba(0,0,0,.26),
+    0 0 25px rgba(139,63,240,.08);
+}
+
+.btn,
+.cta,
+.contact-btn,
+.comment-submit{
+  transition:
+    transform .22s ease,
+    filter .22s ease,
+    box-shadow .22s ease;
+}
+
+.btn:hover,
+.cta:hover,
+.contact-btn:hover,
+.comment-submit:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.07);
+  box-shadow:0 12px 28px rgba(108,40,217,.20);
+}
 </style>
 </head>
 <body class="vx-loading">
