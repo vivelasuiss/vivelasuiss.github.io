@@ -30,8 +30,15 @@ async function loadComments() {
 
   if (!commentsContainer) return;
 
-  commentsContainer.innerHTML =
-    `<p>Yorumlar yükleniyor...</p>`;
+commentsContainer.innerHTML = `
+  <div class="card review comment-loading">
+    <div style="font-size:28px;margin-bottom:8px;">💬</div>
+    <strong>Yorumlar hazırlanıyor…</strong>
+    <p style="margin:6px 0 0;">
+      Onaylanan müşteri deneyimleri burada görünecek.
+    </p>
+  </div>
+`;
 
   const { data, error } =
     await supabaseClient
