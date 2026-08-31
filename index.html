@@ -1019,72 +1019,7 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
     grid-template-columns:1fr;
   }
 
-}
-  /* ===== YORUM BÖLÜMÜ YERLEŞİM DÜZELTMESİ ===== */
-
-#yorumlar{
-  display:block !important;
-  width:100% !important;
-}
-
-#yorumlar .reviews-heading{
-  display:flex !important;
-  width:100% !important;
-  align-items:flex-end !important;
-  justify-content:space-between !important;
-  gap:24px !important;
-  margin-bottom:28px !important;
-}
-
-#yorumlar #commentsContainer{
-  display:grid !important;
-  width:100% !important;
-  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
-  gap:16px !important;
-}
-
-#yorumlar .comment-form-wrap{
-  display:block !important;
-  width:min(860px,100%) !important;
-  margin:34px auto 0 !important;
-}
-
-#yorumlar .comment-form{
-  display:grid !important;
-  width:100% !important;
-  gap:13px !important;
-}
-
-#yorumlar .comment-form-row{
-  display:grid !important;
-  grid-template-columns:1fr 1fr !important;
-  gap:13px !important;
-}
-
-@media(max-width:850px){
-
-  #yorumlar .reviews-heading{
-    flex-direction:column !important;
-    align-items:flex-start !important;
-  }
-
-  #yorumlar #commentsContainer{
-    grid-template-columns:1fr !important;
-  }
-
-  #yorumlar .comment-form-row{
-    grid-template-columns:1fr !important;
-  }
-
-}
-
-@media(max-width:560px){
-
-  #yorumlar .comment-form-bottom{
-    flex-direction:column !important;
-    align-items:stretch !important;
-  }
-
+  
 }
 </style>
 </head>
