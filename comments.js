@@ -1,227 +1,404 @@
-const SUPABASE_URL =
-  window.SUPABASE_URL ||
-  "https://ubwwdnkysazhmyqzfknh.supabase.co";
+/* VIVELASUISS - Supabase customer comments */
 
-const SUPABASE_KEY =
-  window.SUPABASE_KEY ||
-  "sb_publishable_Qc5mc1Bmt9Zyyh1KWX75EQ_DGpr7Tso";
+(() => {
 
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+  const SUPABASE_URL = window.SUPABASE_URL;
+  const SUPABASE_KEY = window.SUPABASE_KEY;
 
-const commentsContainer =
-  document.getElementById("commentsContainer");
+  const container =
+    document.getElementById("commentsContainer");
 
-const commentForm =
-  document.getElementById("commentForm");
+  const form =
+    document.getElementById("commentForm");
 
-const commentStatus =
-  document.getElementById("commentStatus");
+  const status =
+    document.getElementById("commentStatus");
 
 
-/* =========================
-   YORUMLARI GETİR
-========================= */
+  /* =========================
+     KONTROLLER
+  ========================= */
 
-async function loadComments() {
-
-  if (!commentsContainer) return;
-
-commentsContainer.innerHTML = `
-  <div class="card review comment-loading">
-    <div style="font-size:28px;margin-bottom:8px;">💬</div>
-    <strong>Yorumlar hazırlanıyor…</strong>
-    <p style="margin:6px 0 0;">
-      Onaylanan müşteri deneyimleri burada görünecek.
-    </p>
-  </div>
-`;
-
-  const { data, error } =
-    await supabaseClient
-      .from("comments")
-      .select("*")
-      .eq("approved", true)
-      .order("created_at", {
-        ascending: false
-      });
-
-  if (error) {
-
-    console.error("Yorumlar alınamadı:", error);
-
-    commentsContainer.innerHTML =
-      `<p>Yorumlar şu anda yüklenemiyor.</p>`;
-
+  if (!container) {
+    console.error("commentsContainer bulunamadı.");
     return;
   }
 
-  if (!data || data.length === 0) {
-
-    commentsContainer.innerHTML =
-      `<p>Henüz onaylanmış yorum bulunmuyor.</p>`;
-
+  if (!window.supabase) {
+    console.error("Supabase JS yüklenmemiş.");
+    container.innerHTML = `
+      <div class="card review comment-loading">
+        <strong>Yorumlar şu anda yüklenemiyor.</strong>
+        <p>Lütfen daha sonra tekrar deneyin.</p>
+      </div>
+    `;
     return;
   }
 
-  commentsContainer.innerHTML =
-    data.map(comment => {
+  if (!SUPABASE_URL || !SUPABASE_KEY) {
+    console.error("Supabase URL veya Publishable Key bulunamadı.");
+    container.innerHTML = `
+      <div class="card review comment-loading">
+        <strong>Yorumlar şu anda yüklenemiyor.</strong>
+        <p>Lütfen daha sonra tekrar deneyin.</p>
+      </div>
+    `;
+    return;
+  }
 
-      const name =
-        escapeHTML(
-          comment.name || "Müşteri"
-        );
 
-      const text =
-        escapeHTML(
-          comment.comment ||
-          comment.text ||
-          ""
-        );
+  /* =========================
+     SUPABASE
+  ========================= */
 
-      const rating =
-        Math.max(
-          1,
-          Math.min(
-            5,
-            Number(comment.rating) || 5
-          )
-        );
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
-      const stars =
-        "★".repeat(rating) +
-        "☆".repeat(5 - rating);
 
-      return `
-        <article class="card review">
+  /* =========================
+     GÜVENLİ HTML
+  ========================= */
 
-          <div class="review-name">
-            ${name}
+  function escapeHTML(value) {
+
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
+
+
+  /* =========================
+     YORUMLARI EKRANA BAS
+  ========================= */
+
+  function renderComments(comments) {
+
+    if (!comments || comments.length === 0) {
+
+      container.innerHTML = `
+        <div class="card review comment-loading">
+
+          <div style="font-size:28px;margin-bottom:8px;">
+            💬
           </div>
 
-          <div class="stars">
-            ${stars}
-            <small style="color:#a4a8b5;letter-spacing:0">
-              ${rating}.0
-            </small>
-          </div>
+          <strong>
+            Henüz yayınlanmış yorum yok.
+          </strong>
 
           <p>
-            ${text}
+            İlk deneyimini sen paylaş!
           </p>
 
-        </article>
+        </div>
       `;
 
-    }).join("");
-}
-
-
-/* =========================
-   YORUM GÖNDER
-========================= */
-
-if (commentForm) {
-
-  commentForm.addEventListener(
-    "submit",
-    async function(event) {
-
-      event.preventDefault();
-
-      const name =
-        document
-          .getElementById("commentName")
-          ?.value
-          .trim();
-
-      const email =
-        document
-          .getElementById("commentEmail")
-          ?.value
-          .trim();
-
-      const rating =
-        Number(
-          document
-            .getElementById("commentRating")
-            ?.value
-        );
-
-      const comment =
-        document
-          .getElementById("commentText")
-          ?.value
-          .trim();
-
-      if (!name || !email || !rating || !comment) {
-
-        commentStatus.textContent =
-          "Lütfen tüm alanları doldurun.";
-
-        return;
-      }
-
-      commentStatus.textContent =
-        "Yorum gönderiliyor...";
-
-      const { error } =
-        await supabaseClient
-          .from("comments")
-          .insert([
-            {
-              name: name,
-              email: email,
-              rating: rating,
-              comment: comment,
-              approved: false
-            }
-          ]);
-
-      if (error) {
-
-        console.error(
-          "Yorum gönderilemedi:",
-          error
-        );
-
-        commentStatus.textContent =
-          "Yorum gönderilemedi. Lütfen tekrar deneyin.";
-
-        return;
-      }
-
-      commentForm.reset();
-
-      commentStatus.textContent =
-        "Yorumunuz gönderildi. Admin onayından sonra yayınlanacaktır.";
-
+      return;
     }
-  );
-
-}
 
 
-/* =========================
-   GÜVENLİ HTML
-========================= */
+    container.innerHTML =
+      comments.map(item => {
 
-function escapeHTML(value) {
-
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
+        const name =
+          escapeHTML(
+            item.name || "Müşteri"
+          );
 
 
-/* =========================
-   BAŞLAT
-========================= */
+        const text =
+          escapeHTML(
+            item.comment ??
+            item.text ??
+            ""
+          );
 
-loadComments();
+
+        let rating =
+          Number(item.rating) || 5;
+
+
+        rating =
+          Math.max(
+            1,
+            Math.min(5, rating)
+          );
+
+
+        const stars =
+          "★".repeat(rating) +
+          "☆".repeat(5 - rating);
+
+
+        return `
+
+          <article class="card review">
+
+            <div
+              class="stars"
+              aria-label="${rating} yıldız"
+            >
+              ${stars}
+
+              <small
+                style="
+                  color:#a4a8b5;
+                  letter-spacing:0;
+                "
+              >
+                ${rating}.0
+              </small>
+
+            </div>
+
+
+            <div class="review-name">
+              ${name}
+            </div>
+
+
+            <p>
+              ${text}
+            </p>
+
+          </article>
+
+        `;
+
+      }).join("");
+
+  }
+
+
+  /* =========================
+     YORUMLARI SUPABASE'DEN AL
+  ========================= */
+
+  async function loadComments() {
+
+    container.innerHTML = `
+
+      <div class="card review comment-loading">
+
+        <div style="font-size:28px;margin-bottom:8px;">
+          💬
+        </div>
+
+        <strong>
+          Yorumlar hazırlanıyor…
+        </strong>
+
+        <p>
+          Onaylanan müşteri deneyimleri burada görünecek.
+        </p>
+
+      </div>
+
+    `;
+
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+
+        .from("comments")
+
+        .select(
+          "id,name,comment,rating,approved,created_at"
+        )
+
+        .eq(
+          "approved",
+          true
+        )
+
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+
+    if (error) {
+
+      console.error(
+        "Supabase yorum hatası:",
+        error
+      );
+
+
+      container.innerHTML = `
+
+        <div class="card review comment-loading">
+
+          <strong>
+            Yorumlar şu anda yüklenemiyor.
+          </strong>
+
+          <p>
+            Lütfen daha sonra tekrar deneyin.
+          </p>
+
+        </div>
+
+      `;
+
+      return;
+    }
+
+
+    renderComments(
+      data || []
+    );
+
+  }
+
+
+  /* =========================
+     YORUM GÖNDER
+  ========================= */
+
+  if (form) {
+
+    form.addEventListener(
+      "submit",
+      async (event) => {
+
+        event.preventDefault();
+
+
+        const name =
+          document
+            .getElementById("commentName")
+            ?.value
+            .trim();
+
+
+        const email =
+          document
+            .getElementById("commentEmail")
+            ?.value
+            .trim();
+
+
+        const rating =
+          Number(
+            document
+              .getElementById("commentRating")
+              ?.value
+          );
+
+
+        const comment =
+          document
+            .getElementById("commentText")
+            ?.value
+            .trim();
+
+
+        if (
+          !name ||
+          !email ||
+          !rating ||
+          !comment
+        ) {
+
+          if (status) {
+
+            status.textContent =
+              "Lütfen tüm alanları doldurun.";
+
+          }
+
+          return;
+
+        }
+
+
+        if (status) {
+
+          status.textContent =
+            "Yorum gönderiliyor…";
+
+        }
+
+
+        const {
+          error
+        } =
+          await supabaseClient
+
+            .from("comments")
+
+            .insert([
+
+              {
+
+                name: name,
+
+                email: email,
+
+                rating: rating,
+
+                comment: comment,
+
+                approved: false
+
+              }
+
+            ]);
+
+
+        if (error) {
+
+          console.error(
+            "Yorum gönderme hatası:",
+            error
+          );
+
+
+          if (status) {
+
+            status.textContent =
+              "Yorum gönderilemedi. Lütfen tekrar deneyin.";
+
+          }
+
+          return;
+
+        }
+
+
+        form.reset();
+
+
+        if (status) {
+
+          status.textContent =
+            "Yorumunuz gönderildi. Admin onayından sonra yayınlanacaktır.";
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* =========================
+     BAŞLAT
+  ========================= */
+
+  loadComments();
+
+})();
