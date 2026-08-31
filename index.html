@@ -1166,6 +1166,94 @@ body::after{content:"";position:fixed;inset:-30%;z-index:0;pointer-events:none;b
   color:#b7bac5;
   line-height:1.7;
 }
+  /* ===== PREMIUM HERO / CUBE ===== */
+
+.hero-art{
+  perspective:1200px;
+}
+
+.cube-stage{
+  filter:drop-shadow(0 20px 45px rgba(108,40,217,.18));
+}
+
+.cube{
+  transition:
+    transform .12s cubic-bezier(.2,.8,.2,1),
+    filter .3s ease;
+}
+
+.cube-stage:hover .cube{
+  filter:
+    drop-shadow(0 0 18px rgba(166,108,255,.22))
+    drop-shadow(0 0 40px rgba(108,40,217,.12));
+}
+
+.cube-face{
+  transition:
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+.cube-stage:hover .cube-face{
+  border-color:rgba(225,195,255,.72);
+  box-shadow:
+    inset 0 0 38px rgba(157,77,255,.18),
+    0 0 32px rgba(128,48,255,.2);
+}
+
+.hero .buttons .btn{
+  position:relative;
+  overflow:hidden;
+}
+
+.hero .buttons .btn::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-120%;
+  width:70%;
+  height:100%;
+  transform:skewX(-20deg);
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.13),
+    transparent
+  );
+  transition:left .55s ease;
+}
+
+.hero .buttons .btn:hover::after{
+  left:140%;
+}
+  /* ===== PREMIUM SECTION TRANSITIONS ===== */
+
+section{
+  position:relative;
+}
+
+section::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:8%;
+  right:8%;
+  height:1px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(166,108,255,.18),
+    transparent
+  );
+
+  opacity:.7;
+  pointer-events:none;
+}
+
+section:first-of-type::before{
+  display:none;
+}
 </style>
 </head>
 <body class="vx-loading">
