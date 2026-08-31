@@ -716,6 +716,10 @@ function draw(t){x.clearRect(0,0,w,h);let tm=t*.001;for(const a of p){a.x+=a.vx+
 for(let i=0;i<p.length;i+=4){let a=p[i];for(let j=i+2;j<Math.min(i+9,p.length);j+=2){let b=p[j],dx=a.x-b.x,dy=a.y-b.y,dist=Math.hypot(dx,dy);if(dist<120){x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.strokeStyle='rgba(156,84,255,'+(.045*(1-dist/120))+')';x.lineWidth=.7;x.stroke()}}}raf=requestAnimationFrame(draw)}
 size();addEventListener('resize',size,{passive:true});raf=requestAnimationFrame(draw)})();
 </script>
+<script>
+  window.SUPABASE_URL = "https://ubwwdnkysazhmyqzfknh.supabase.co";
+  window.SUPABASE_KEY = "sb_publishable_Qc5mc1Bmt9Zyyh1KWX75EQ_DGpr7Tso";
+</script>
 <script src="comments.js"></script>
 </body>
 </html>
